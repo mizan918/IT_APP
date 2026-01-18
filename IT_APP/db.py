@@ -1,21 +1,23 @@
 import os
-
-DB_MODE = os.getenv("DB_MODE", "LOCAL")  # LOCAL or CLOUD
+import oracledb
 
 def get_connection():
-    if DB_MODE == "LOCAL":
-        import oracledb
 
-        oracledb.init_oracle_client(
-            lib_dir=r"D:\App\Zobair\product\11.2.0\client_1"
-        )
+    db_mode = os.getenv("DB_MODE", "LOCAL").upper()
 
-        return oracledb.connect(
-            user="mp_dec25",
-            password="a",
-            dsn="192.168.21.14:1521/testababil"
-        )
+    if db_mode == "LOCAL":
+        oracle_client_path = os.getenv("ORACLE_CLIENT_PATH")
 
-    else:
-        # Cloud / Render mode (NO Oracle)
-        return None
+        if not oracle_client_path:
+            raise RuntimeError("ORACLE_CLIENT_PATH not set for LOCAL mode")
+
+        try:
+            oracledb.init_oracle_client(lib_dir=oracle_client_path)
+        except oracledb.ProgrammingError:
+            pass
+
+    return oracledb.connect(
+        user=os.getenv("DB_USER"),
+        password=os.getenv("DB_PASSWORD"),
+        dsn=os.getenv("DB_DSN")
+    )
