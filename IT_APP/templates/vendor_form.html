@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+
+{% block title %}Vendor Form{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-body">
+                    <h3 class="card-title mb-4 text-center">Vendor Information</h3>
+
+                  
+
+                    <form method="POST" novalidate>
+                        <div class="mb-3">
+                            <label class="form-label">Vendor Name</label>
+                            <input type="text" name="vendor_name" class="form-control" required>
+                            <div class="invalid-feedback">Vendor Name is required.</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Vendor Type</label>
+                            <input type="text" name="vendor_type" class="form-control" required>
+                            <div class="invalid-feedback">Vendor Type is required.</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Contact Number</label>
+                            <input type="tel" name="contact_number" class="form-control" pattern="^[0-9+\-]{6,15}$" required>
+                            <div class="invalid-feedback">Please enter a valid contact number (6–15 digits).</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Email</label>
+                            <input type="email" name="email" class="form-control" required>
+                            <div class="invalid-feedback">Valid email is required.</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Address</label>
+                            <input type="text" name="address" class="form-control" required>
+                            <div class="invalid-feedback">Address is required.</div>
+                        </div>
+						
+                        <div class="mb-3">
+                            <label class="form-label">Contact Person 1</label>
+                            <input type="text" name="contact_person1" class="form-control" required>
+                            <div class="invalid-feedback">Contact Person 1 is required.</div>
+                        </div>
+						
+                        <div class="mb-3">
+                            <label class="form-label">Contact Person 2</label>
+                            <input type="text" name="contact_person2" class="form-control">
+                        </div>
+						
+                        <div class="mb-3">
+                            <label class="form-label">Contact Person 3</label>
+                            <input type="text" name="contact_person3" class="form-control">
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Status</label>
+                            <select name="status" class="form-select" required>
+                                <option value="">-- Select Status --</option>
+                                <option value="Active">Active</option>
+                                <option value="Inactive">Inactive</option>
+                            </select>
+                            <div class="invalid-feedback">Status is required.</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Notes</label>
+                            <input type="text" name="notes" class="form-control">
+                        </div>
+
+                        <button type="submit" class="btn btn-warning">Save Vendor</button>
+                        <a href="{{ url_for('dashboard') }}" class="btn btn-secondary">Back to Dashboard</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+  // Enable Bootstrap validation styles
+  (() => {
+    'use strict'
+    const forms = document.querySelectorAll('form')
+
+    Array.from(forms).forEach(form => {
+      form.addEventListener('submit', event => {
+        if (!form.checkValidity()) {
+          event.preventDefault()
+          event.stopPropagation()
+        }
+        form.classList.add('was-validated')
+      }, false)
+    })
+  })()
+</script>
+{% endblock %}

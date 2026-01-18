@@ -1,0 +1,128 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-5">
+  <h2 class="mb-4">Reports</h2>
+
+  <form method="POST" class="mb-4">
+    <div class="row g-2 align-items-end">
+
+      <div class="col-md-3">
+        <label class="form-label">Report Type</label>
+        <select name="report_type" class="form-control" required>
+		  <option value="">-- Select Report Type --</option>	
+          <option value="purchase" {% if report_type == 'purchase' %}selected{% endif %}>Purchase</option>
+          <option value="vendor" {% if report_type == 'vendor' %}selected{% endif %}>Vendor</option>
+          <option value="category" {% if report_type == 'category' %}selected{% endif %}>Category</option>
+        </select>
+      </div>
+
+      <div class="col-md-3">
+        <label class="form-label">From</label>
+        <input type="date" name="from_date" value="{{ from_date }}" class="form-control">
+      </div>
+
+      <div class="col-md-3">
+        <label class="form-label">To</label>
+        <input type="date" name="to_date" value="{{ to_date }}" class="form-control">
+      </div>
+
+      <div class="col-md-3">
+        <button type="submit" class="btn btn-primary w-100">Run Report</button>
+      </div>
+
+    </div>
+  </form>
+
+  <!-- ================= Vendor Report ================= -->
+  {% if report_type == 'vendor' %}
+  <h4>Vendor Report</h4>
+  <table class="table table-bordered table-sm">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Contact</th>
+        <th>Email</th>
+        <th>Address</th>
+        <th>Created</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for v in vendors %}
+      <tr>
+        <td>{{ v[0] }}</td>
+        <td>{{ v[1] }}</td>
+        <td>{{ v[2] }}</td>
+        <td>{{ v[3] }}</td>
+        <td>{{ v[4] }}</td>
+        <td>{{ v[5] }}</td>
+        <td>{{ v[6].strftime('%Y-%m-%d') if v[6] else '' }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% endif %}
+
+  <!-- ================= Category Report ================= -->
+  {% if report_type == 'category' %}
+  <h4>Category Report</h4>
+  <table class="table table-bordered table-sm">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Category</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for c in categories %}
+      <tr>
+        <td>{{ c[0] }}</td>
+        <td>{{ c[1] }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% endif %}
+
+  <!-- ================= Purchase Report ================= -->
+  {% if report_type == 'purchase' %}
+  <h4>Purchase Report</h4>
+  <table class="table table-bordered table-sm">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Product</th>
+        <th>Code</th>
+        <th>Date</th>
+        <th>Amount</th>
+        <th>Status</th>
+        <th>User</th>
+        <th>File</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for p in purchases %}
+      <tr>
+        <td>{{ p[0] }}</td>
+        <td>{{ p[1] }}</td>
+        <td>{{ p[2] }}</td>
+        <td>{{ p[3].strftime('%Y-%m-%d') if p[3] else '' }}</td>
+        <td>{{ p[4] }}</td>
+        <td>{{ p[5] }}</td>
+        <td>{{ p[6] }}</td>
+        <td>
+          {% if p[7] %}
+            <a href="{{ url_for('view_purchase_file', filename=p[7]) }}" target="_blank">View</a>
+          {% else %}
+            N/A
+          {% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% endif %}
+
+</div>
+{% endblock %}

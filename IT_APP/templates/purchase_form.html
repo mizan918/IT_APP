@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-5">
+    <h2>Purchase Form</h2>
+    <form method="POST" enctype="multipart/form-data">
+
+       <!-- Vendor -->
+        <div class="mb-3">
+            <label for="vendor_id">Vendor</label>
+            <select name="vendor_id" id="vendor_id" class="form-control" required>
+            <option value="">-- Select Vendor --</option>
+                {% for v in vendors %}
+                    <option value="{{ v[0] }}">{{ v[1] }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <!-- Product Name -->
+        <div class="mb-3">
+            <label for="product_name">Product Name</label>
+            <input type="text" name="product_name" class="form-control" required>
+        </div>
+
+        <!-- Product Code -->
+        <div class="mb-3">
+            <label for="product_code">Product Code</label>
+            <input type="text" name="product_code" class="form-control" required>
+        </div>
+
+        <!-- Branch -->
+        <div class="mb-3">
+            <label for="branch_id">Branch</label>
+            <select name="branch_id" id="branch_id" class="form-control" required>
+			<option value="">-- Select Branch --</option>
+                {% for b in branches %}
+                    <option value="{{ b[0] }}">{{ b[1] }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <!-- Category -->
+        <div class="mb-3">
+            <label for="asset_category_id">Category</label>
+            <select name="asset_category_id" id="asset_category_id" class="form-control" required>
+			<option value="">-- Select Category --</option>
+                {% for c in categories %}
+                    <option value="{{ c[0] }}">{{ c[1] }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <!-- Purchase Date -->
+        <div class="mb-3">
+            <label for="purchase_date">Purchase Date</label>
+            <input type="date" name="purchase_date" class="form-control" required>
+        </div>
+
+        <!-- Purchase Amount -->
+        <div class="mb-3">
+            <label for="purchase_amount">Amount</label>
+            <input type="number" name="purchase_amount" class="form-control" required>
+        </div>
+
+        <!-- Status -->
+        <div class="mb-3">
+            <label for="status">Status</label>
+            <input type="text" name="status" class="form-control">
+        </div>
+
+        <!-- Specification -->
+        <div class="mb-3">
+            <label for="specification">Specification</label>
+            <textarea name="specification" class="form-control"></textarea>
+        </div>
+
+        <!-- Notes -->
+        <div class="mb-3">
+            <label for="notes">Notes</label>
+            <textarea name="notes" class="form-control"></textarea>
+        </div>
+
+        <!-- NEW Username field -->
+        <div class="mb-3">
+            <label for="pi_username">Username</label>
+            <input type="text" name="pi_username" class="form-control" placeholder="Enter username" required>
+        </div>
+
+        <!-- File Upload -->
+        <div class="mb-3">
+            <label for="purchase_file">Upload File</label>
+            <input type="file" name="purchase_file" class="form-control">
+        </div>
+
+        <button type="submit" class="btn btn-primary">Save Purchase</button>
+    </form>
+</div>
+{% endblock %}
